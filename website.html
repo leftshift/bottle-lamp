@@ -1,0 +1,102 @@
+<html>
+<head>
+  <title>Bottle Lamp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+</head>
+<body>
+<style>
+body {
+  background: #333333;
+  color: white;
+  font-family: "sans";
+  font-size: 1.5em;
+}
+input {
+  width: 99%;
+}
+.nav {
+  background: #555555;
+  padding: 0.2em;
+  list-style: none;
+  overflow-x: scroll;
+  white-space:nowrap
+}
+.nav li {
+  display: inline-block;
+  padding: 0 5px 0 8px;
+}
+.nav a {
+  color: #fff;
+}
+</style>
+<script>
+function animation(e, a) {
+  send(e, "a/" + a);
+  controlBox(a);
+}
+function send(e, u){
+  req = new XMLHttpRequest();
+  req.open("GET", u, false);
+  req.send(null);
+}
+function controlBox(a){
+  boxes = document.querySelectorAll(".animation");
+  for (i=0; i<boxes.length; i++){
+    boxes[i].style.display = "none";
+  }
+  box = document.getElementById(a);
+  box.style.display = "block";
+}
+</script>
+<div class="header">
+  <ul class="nav">
+    <li><a href="#" onclick="animation(this, 'black')">black</a></li>
+    <li><a href="#" onclick="animation(this, 'rainbow')">rainbow</a></li>
+    <li><a href="#" onclick="animation(this, 'fire')">fire</a></li>
+    <li><a href="#" onclick="animation(this, 'color_solid')">color</a></li>
+    <li><a href="#" onclick="animation(this, 'color_bubbling')">color_bubbling</a></li>
+    <li><a href="#" onclick="animation(this, 'juggle')">juggle</a></li>
+    <li><a href="#" onclick="animation(this, 'sinelon')">sinelon</a></li>
+  </ul>
+  <div>
+      <label for="brightness">Brightness</label>
+      <input type="range" min="0" max="255" value="255" name="brightness" onchange="send(this, 'brightness?b=' + this.value)">
+  </div>
+</div>
+<div class="container">
+  <hr>
+  <div class="animation" id="black">
+    <h2>Black</h2>
+  </div>
+  <div class="animation" id="rainbow">
+    <h2>Rainbow</h2>
+    <label for="r_speed">speed</label>
+    <input type="range" min="0" max="70" value="20" name="r_speed" onchange="send(this, 'a/rainbow?s=' + this.value)">
+    <label for="r_width">width</label>
+    <input type="range" min="0" max="20" value="7" name="r_width" onchange="send(this, 'a/rainbow?w=' + this.value)">
+  </div>
+  <div class="animation" id="fire">
+    <h2>Fire</h2>
+  </div>
+  <div class="animation" id="color_solid">
+    <h2>Color</h2>
+    <label for="c_color">Color</label>
+    <input type="color" name="c_color" onchange="send(this, 'a/color_solid?c=' + this.value.slice(1))">
+  </div>
+  <div class="animation" id="color_bubbling">
+    <h2>Color_bubbling</h2>
+    <label for="b_color">Color</label>
+    <input type="color" name="b_color" onchange="send(this, 'a/color_bubbling?c=' + this.value.slice(1))">
+    <label for="b_on">on</label>
+    <input type="range" min="0" max="255" value="20" name="b_on" onchange="send(this, 'a/color_bubbling?on=' + this.value)">
+    <label for="b_off">off</label>
+    <input type="range" min="0" max="255" value="7" name="b_off" onchange="send(this, 'a/color_bubbling?off=' + this.value)">
+  </div>
+  <div class="animation" id="juggle">
+    <h2>Juggle</h2>
+  </div>
+  <div class="animation" id="sinelon">
+    <h2>Sinelon</h2>
+  </div>
+</div>
+</body>
